@@ -7,8 +7,6 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 import { useState } from 'react';
 import { Home, Person, People, Message, Settings } from '@mui/icons-material';
 
-
-
 const Sidebar = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
@@ -18,7 +16,8 @@ const Sidebar = () => {
 
   return (
     <Box
-      bgcolor="skyblue"
+      bgcolor="background.paper"
+      color="text.primary"
       flex={1}
       p={2}
       sx={{ display: { xs: 'none', sm: 'block' } }}
@@ -60,7 +59,7 @@ const Sidebar = () => {
           </ListItemIcon>
           <ListItemText primary="Messages" />
         </ListItemButton>
-        
+
         <ListItemButton
           selected={selectedIndex === 0}
           onClick={(event) => handleListItemClick(event, 1)}

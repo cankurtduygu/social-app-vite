@@ -9,31 +9,15 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { faker } from '@faker-js/faker';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
-
-
-
-const generatePost = (id) => ({
-  id: id.toString(),
-  authorName: faker.person.fullName(),
-  authorAvatar: faker.image.avatar(),
-  timestamp: faker.date.recent().toLocaleDateString(),
-  content: faker.lorem.paragraph(5),
-  image: `https://picsum.photos/600/400?random=${id}`,
-  likes: faker.number.int({ min: 10, max: 500 }),
-  liked:false
-});
-
-const mockPosts = Array.from({ length: 10 }, (_, i) => generatePost(i + 1));
+import { mockPosts } from '../helper/data';
 
 const Feed = () => {
-
   const [fakerData, setfakerData] = useState(mockPosts);
 
   return (
-    <Box bgcolor="lightgreen" flex={4} p={2}>
+    <Box bgcolor="background.paper" color="text.primary" flex={4} p={2}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {fakerData.map((post) => (
           <Card key={post.id}>
@@ -62,13 +46,26 @@ const Feed = () => {
             </CardContent>
             <CardActions disableSpacing>
               <IconButton aria-label="add to favorites">
-                 <Checkbox checked={post.liked}
-                  onChange={() => {setfakerData(prev => prev.map(p => p.id === post.id ? 
-                  {...p, liked: !p.liked, likes: p.liked ? p.likes - 1 : p.likes + 1} : p))}} 
-                  icon={<FavoriteBorder />} 
-                  checkedIcon={<Favorite sx={{color:"red"}} />} />
+                <Checkbox
+                  checked={post.liked}
+                  onChange={() => {
+                    setfakerData((prev) =>
+                      prev.map((p) =>
+                        p.id === post.id
+                          ? {
+                              ...p,
+                              liked: !p.liked,
+                              likes: p.liked ? p.likes - 1 : p.likes + 1,
+                            }
+                          : p
+                      )
+                    );
+                  }}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite sx={{ color: 'red' }} />}
+                />
               </IconButton>
-              <Typography variant="body2" sx={{ mr: 1}}>
+              <Typography variant="body2" sx={{ mr: 1 }}>
                 {post.likes}
               </Typography>
               <IconButton aria-label="share">

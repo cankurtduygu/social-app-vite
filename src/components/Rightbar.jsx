@@ -7,18 +7,23 @@ import CommentarListComp from './CommentarListComp';
 const Rightbar = () => {
   return (
     <Box
-      bgcolor="background.paper"
+      bgcolor="background.default"
       color="text.primary"
       flex={2}
       p={2}
       sx={{ display: { xs: 'none', sm: 'block' } }}
     >
-      <Box position="sticky" top={0} sx={{ width: '100%', maxWidth: 360 }}>
+      <Box
+        position="sticky"
+        top={0}
+        sx={{ width: '100%', maxWidth: 360, mx: 'auto' }}
+      >
         <Box sx={{ bgcolor: 'background.paper', p: 2, borderRadius: 1 }}>
-          <Typography variant="h6" fontWeight={100}>
+          <Typography variant="h6" fontWeight={300}>
             Online Friends
           </Typography>
-          <AvatarGroup max={4}>
+
+          <AvatarGroup max={4} sx={{ width: '100%', justifyContent: 'center' }}>
             {messages.map((friend) => (
               <Avatar key={friend.id} alt={friend.name} src={friend.avatar} />
             ))}

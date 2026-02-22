@@ -8,15 +8,26 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import PeopleIcon from '@mui/icons-material/People';
+import MessageIcon from '@mui/icons-material/Message';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { ModeNight } from '@mui/icons-material';
 
-export default function PrimarySearchAppBar({mode, setMode}) {
+export default function PrimarySearchAppBar({ mode, setMode }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -32,6 +43,10 @@ export default function PrimarySearchAppBar({mode, setMode}) {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleDrawerToggle = () => {
+    setMobileDrawerOpen((prev) => !prev);
   };
 
   const menuId = 'primary-search-account-menu';
@@ -108,16 +123,58 @@ export default function PrimarySearchAppBar({mode, setMode}) {
     </Menu>
   );
 
+  const drawerContent = (
+    <Box sx={{ width: 260 }} role="presentation" onClick={handleDrawerToggle}>
+      <Toolbar />
+      <List component="nav" aria-label="mobile navigation">
+        <ListItemButton>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Friends" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <MessageIcon />
+          </ListItemIcon>
+          <ListItemText primary="Messages" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Settings" />
+        </ListItemButton>
+      </List>
+    </Box>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { xs: 'inline-flex', sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -150,7 +207,11 @@ export default function PrimarySearchAppBar({mode, setMode}) {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton size="large" onClick={(e) => setMode(mode=== "light" ? "dark" : "light")} color="inherit">
+            <IconButton
+              size="large"
+              onClick={(e) => setMode(mode === 'light' ? 'dark' : 'light')}
+              color="inherit"
+            >
               <ModeNight />
             </IconButton>
 
@@ -168,6 +229,14 @@ export default function PrimarySearchAppBar({mode, setMode}) {
           </Box>
         </Toolbar>
       </AppBar>
+      <Drawer
+        anchor="left"
+        open={mobileDrawerOpen}
+        onClose={handleDrawerToggle}
+        sx={{ display: { xs: 'block', sm: 'none' } }}
+      >
+        {drawerContent}
+      </Drawer>
       <Toolbar />
       {renderMobileMenu}
       {renderMenu}

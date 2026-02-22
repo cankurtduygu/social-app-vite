@@ -17,7 +17,7 @@ const Feed = () => {
   const [fakerData, setfakerData] = useState(mockPosts);
 
   return (
-    <Box bgcolor="background.paper" color="text.primary" flex={4} p={2}>
+    <Box bgcolor="background.default" color="text.primary" flex={4} p={2}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {fakerData.map((post) => (
           <Card key={post.id}>
